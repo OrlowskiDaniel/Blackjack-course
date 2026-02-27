@@ -7,3 +7,10 @@ waf-*-*/
 waf3-*-*/
 # Lockfile
 .lock-waf_*_build
+
+# Visual Studio temporary files
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
