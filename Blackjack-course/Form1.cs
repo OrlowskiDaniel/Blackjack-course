@@ -19,14 +19,14 @@ namespace Blackjack_course
 
         private void btnHowToPlay_Click(object sender, EventArgs e)
         {
-            // 1. Create an instance of your new window
+            
             HowToPlayForm infoWindow = new HowToPlayForm();
 
-            // 2. Show the window. 
-            // Using .ShowDialog() makes it a "popup" that must be closed before returning to the game.
+            // show the window
+            // using .ShowDialog() makes it a "popup"
             infoWindow.ShowDialog();
 
-            // 3. Clean up memory after the window is closed
+            // clean up memory after the window is closed
             infoWindow.Dispose();
         }
     }
