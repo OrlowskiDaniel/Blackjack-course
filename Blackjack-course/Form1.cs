@@ -15,19 +15,67 @@ namespace Blackjack_course
         public Form1()
         {
             InitializeComponent();
+            gamePanel.Visible = false;
         }
 
         private void btnHowToPlay_Click(object sender, EventArgs e)
         {
-            // 1. Create an instance of your new window
             HowToPlayForm infoWindow = new HowToPlayForm();
 
-            // 2. Show the window. 
-            // Using .ShowDialog() makes it a "popup" that must be closed before returning to the game.
+            // show the window. 
+            // using .ShowDialog() makes it a "popup"
             infoWindow.ShowDialog();
 
-            // 3. Clean up memory after the window is closed
+            // clean up memory after the window is closed
             infoWindow.Dispose();
+        }
+
+        private void playBtn_Click(object sender, EventArgs e)
+        {
+            menuPanel.Visible = false;
+            gameLabel.Visible = false;
+            gamePanel.Visible = true;
+
+        }
+        
+
+        private void quitbtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void testingbtn_Click(object sender, EventArgs e)
+        {
+            Testing testingWindow = new Testing();
+
+            testingWindow.ShowDialog();
+
+            testingWindow.Dispose();
+        }
+
+        private void player2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void player1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
