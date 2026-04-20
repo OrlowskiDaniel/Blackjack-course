@@ -28,14 +28,14 @@ Most blackjack training focuses on player strategy. This simulator flips that �
 
 ## Features
 
-Dealer-perspective gameplay - you control dealing and own hand, players act automatically
-Basic strategy AI - automatic players follow the standard casino rule (hit below 17, stand on 17+)
-Configurable shoe - choose between 1 and 8 decks
-Configurable player count - 1 to 3 players at the table
-Automatic payout resolution - wins 2×, pushes 1×, and losses 0×
-How to Play reference - in-app image guide accessible from both the menu and the game screen
-Card image display - real card images rendered per player and dealer
-Test panel that lives in testing branch - a separate testing window for verifying core class logic (Deck, Shoe, Hand, Dealer, Player)
+- Dealer-perspective gameplay - you control dealing and own hand, players act automatically
+- Basic strategy AI - automatic players follow the standard casino rule (hit below 17, stand on 17+)
+- Configurable shoe - choose between 1 and 8 decks
+- Configurable player count - 1 to 3 players at the table
+- Automatic payout resolution - wins 2×, pushes 1×, and losses 0×
+- How to Play reference - in-app image guide accessible from both the menu and the game screen
+- Card image display - real card images rendered per player and dealer
+- Test panel that lives in testing branch - a separate testing window for verifying core class logic (Deck, Shoe, Hand, Dealer, Player)
 
 
 ## Project structure
@@ -65,10 +65,10 @@ Visual Studio 2022
 
 ### Steps
 
-Clone or download the repository
-Open Blackjack_course.sln in Visual Studio 2022
-Ensure all images in Resources/ have Copy to Output Directory set to Copy always in the file properties
-Press F5 to build and run
+- Clone or download the repository
+- Open Blackjack_course.sln in Visual Studio 2022
+- Ensure all images in Resources/ have Copy to Output Directory set to Copy always in the file properties
+- Press F5 to build and run
 
 
 ## Game flow
@@ -88,10 +88,10 @@ Done → press new round to continue
 
 ## Card naming convention
 Card images must follow this exact format:
-{Rank}_of_{Suit}.png
-Examples: Two_of_Spades.png, Ace_of_Hearts.png, King_of_Diamonds.png
-Rank names match the Rank enum: Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace
-Suit names match the Suit enum: Spades, Hearts, Diamonds, Clubs
+- {Rank}_of_{Suit}.png
+- Examples: Two_of_Spades.png, Ace_of_Hearts.png, King_of_Diamonds.png
+- Rank names match the Rank enum: Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace
+- Suit names match the Suit enum: Spades, Hearts, Diamonds, Clubs
 
 ## Blackjack rules implemented
 - Cards values 2–10, Jack/Queen/King = 10, Ace = 11 or 1
