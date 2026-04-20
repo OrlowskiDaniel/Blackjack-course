@@ -94,13 +94,13 @@ Rank names match the Rank enum: Two, Three, Four, Five, Six, Seven, Eight, Nine,
 Suit names match the Suit enum: Spades, Hearts, Diamonds, Clubs
 
 ## Blackjack rules implemented
-Cards values 2–10, Jack/Queen/King = 10, Ace = 11 or 1
-BustTotal exceeds 21
-Dealer must hit below 17
-Natural blackjack Ace + face card on first two cards (detected, not yet paid at 3:2)
-PushEqual returns the bet Win
-Player total beats dealer - pays 2× betLose
-Player total below dealer - bet lost
+- Cards values 2–10, Jack/Queen/King = 10, Ace = 11 or 1
+- BustTotal exceeds 21
+- Dealer must hit below 17
+- Natural blackjack Ace + face card on first two cards (detected, not yet paid at 3:2)
+- PushEqual returns the bet Win
+- Player total beats dealer - pays 2× betLose
+- Player total below dealer - bet lost
 
 ## Testing panel
 Switch to testing branch. Launch the test panel from the main menu. Each button runs an isolated test and prints pass/fail results to the log console.
