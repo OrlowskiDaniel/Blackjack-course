@@ -10,21 +10,25 @@ namespace Blackjack_course
     public class Shoe
     {
         private List<Deck> decks = new List<Deck>();
+
+        public int NumDecks { get; private set; }
+
         // how many cards remain in the shoe
         public int CardsLeft => decks.Sum(d => d.CardsLeft);
 
 
+
+
         public Shoe(int numDecks) 
         {
+            this.NumDecks = numDecks;
+
             decks = new List<Deck>(); // reset shoe to be empty before adding decks
 
             for (int i = 0; i < numDecks; i++)
             {
                 Console.WriteLine($"Adding deck {i + 1} to shoe.");
                 decks.Add(new Deck());
-                
-
-                //Console.WriteLine($"Deck {i + 1} added. Total cards in shoe: {(i + 1) * cardsPerDeck}");
                 
             }
 

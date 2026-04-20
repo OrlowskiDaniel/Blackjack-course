@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack_course
 {
-    internal class Dealer
+    public class Dealer
     {
         private Hand hand = new Hand();
 
