@@ -73,22 +73,22 @@ Visual Studio 2022
 
 ## Game flow
 New game start
-|
+
 
 Betting (automatic, players place fixed bets)
-|
+
 
 Dealing (dealer distributes 2 cards to each player and self)
-|
+
 
 Player turns (automatic, each player hits or stands by basic strategy)
-|
+
 
 Dealer turn (user decides, press Hit or Stand)
-|
+
 
 Resolving (automatic, compare totals, pay out chips)
-|
+
 
 Done → press new round to continue
 
