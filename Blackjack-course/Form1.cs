@@ -18,6 +18,13 @@ namespace Blackjack_course
             gamePanel.Visible = false;
         }
 
+        private void testingbtn_Click(object sender, EventArgs e)
+        {
+            Testing testingWindow = new Testing();
+            testingWindow.ShowDialog();
+            testingWindow.Dispose();
+        }
+
         private void btnHowToPlay_Click(object sender, EventArgs e)
         {
             HowToPlayForm infoWindow = new HowToPlayForm();
