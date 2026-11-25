@@ -28,10 +28,10 @@ Most blackjack training focuses on player strategy. This simulator flips that �
 
 ## Features
 
-- Dealer-perspective gameplay - you control dealing and own hand, players act automatically
-- Basic strategy AI - automatic players follow the standard casino rule (hit below 17, stand on 17+)
+- Two game modes: Dealer Training (automatic players, user controls the dealer) and Solo Blackjack (user plays against the dealer)
+- Basic strategy AI in Dealer Training - players hit below 17 and stand on 17+
 - Configurable shoe - choose between 1 and 8 decks
-- Configurable player count - 1 to 3 players at the table
+- Configurable player count in Dealer Training - 1 to 3 players at the table
 - Automatic payout resolution - wins 2×, pushes 1×, and losses 0×
 - How to Play reference - in-app image guide accessible from both the menu and the game screen
 - Card image display - real card images rendered per player and dealer
@@ -39,22 +39,26 @@ Most blackjack training focuses on player strategy. This simulator flips that �
 
 
 ## Project structure
-Blackjack_course/
-├── Card.cs          
-├── Deck.cs          
-├── Shoe.cs         
-├── Hand.cs          
-├── Player.cs       
-├── Dealer.cs        
-├── Table.cs      
-├── Form1.cs         
-├── Testing.cs       
-├── HowToPlayForm.cs 
-├── Program.cs       
-└── Resources/
-    ├── cards/     
-    ├── gamescreenbg.png
-    └── how_to_play_blackjack.png
+Blackjack-course/
+├── Forms/
+│   ├── Form1.cs (with its designer and resource files)
+│   └── HowToPlayForm.cs (with its designer and resource files)
+├── Models/
+│   ├── Card.cs
+│   ├── Dealer.cs
+│   ├── Deck.cs
+│   ├── Hand.cs
+│   ├── Player.cs
+│   ├── Shoe.cs
+│   └── Table.cs
+├── Properties/ (application settings and embedded resources)
+├── Resources/
+│   ├── cards/
+│   ├── gamescreenbg.png
+│   └── how_to_play_blackjack.png
+├── App.config
+├── Program.cs
+└── Blackjack-course.csproj
 
 ## How to run
 Requirements
@@ -72,25 +76,13 @@ Visual Studio 2022
 
 
 ## Game flow
-New game start
+Choose Dealer Training or Solo Blackjack from the Play menu.
 
+Dealer Training: players place fixed bets, the dealer deals two cards to everyone, automatic players follow basic strategy, then the user controls the dealer's hand with Hit or Stand.
 
-Betting (automatic, players place fixed bets)
+Solo Blackjack: the player places a fixed bet, receives two cards against the dealer, and chooses Hit or Stand. The dealer then hits below 17 and the round resolves automatically.
 
-
-Dealing (dealer distributes 2 cards to each player and self)
-
-
-Player turns (automatic, each player hits or stands by basic strategy)
-
-
-Dealer turn (user decides, press Hit or Stand)
-
-
-Resolving (automatic, compare totals, pay out chips)
-
-
-Done → press new round to continue
+After either mode resolves, press New Round to continue.
 
 ## Card naming convention
 Card images must follow this exact format:

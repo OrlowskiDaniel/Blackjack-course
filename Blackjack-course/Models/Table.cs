@@ -27,11 +27,14 @@ namespace Blackjack_course
         public Dealer Dealer => dealer;
         public List<Player> Players => players;
         public int ActivePlayerIndex => activePlayerIndex;
+        public bool IsSoloMode { get; private set; }
 
         private int DefaultBet = 50;
 
-        public Table(int shoeSize, int amountOfPlayers)
+        public Table(int shoeSize, int amountOfPlayers, bool isSoloMode = false)
         {
+            IsSoloMode = isSoloMode;
+            if (IsSoloMode) amountOfPlayers = 1;
             shoe = new Shoe(shoeSize);
             shoe.Shuffle();
             dealer = new Dealer();
@@ -50,7 +53,9 @@ namespace Blackjack_course
             {
                 case GameState.Betting: return StartBetting();
                 case GameState.Dealing: return DealInitialCards();
-                case GameState.PlayerTurns: return RunPlayerTurns();
+                case GameState.PlayerTurns:
+                    if (IsSoloMode) return PlaySoloTurn(input);
+                    return RunPlayerTurns();
                 case GameState.DealerTurn:
                     if (input == "hit") return DealerHit();
                     if (input == "stand") return DealerStand();
@@ -87,7 +92,7 @@ namespace Blackjack_course
 
             activePlayerIndex = 0;
             State = GameState.PlayerTurns;
-            return RunPlayerTurns();
+            return IsSoloMode ? "Your turn: choose hit or stand." : RunPlayerTurns();
         }
 
         private string RunPlayerTurns()
@@ -117,6 +122,50 @@ namespace Blackjack_course
 
             State = GameState.DealerTurn;
             return "players done, dealer turn choose hit or stand";
+        }
+
+        private string PlaySoloTurn(string input)
+        {
+            Hand hand = players[0].Hands[0];
+            if (input == "hit")
+            {
+                Card card = dealer.Deal(shoe);
+                hand.Hit(card);
+                if (hand.IsBust)
+                {
+                    State = GameState.Resolving;
+                    return $"You bust at {hand.Total}!\n{Resolve()}";
+                }
+                return $"You hit and now have {hand.Total}. Choose hit or stand.";
+            }
+
+            if (input == "stand")
+            {
+                hand.Stand();
+                string result = $"You stand at {hand.Total}.\n" + PlayDealerAndResolve();
+                return result;
+            }
+
+            return "Your turn: press hit or stand.";
+        }
+
+        private string PlayDealerAndResolve()
+        {
+            string log = "Dealer turn:";
+            while (dealer.Hand.Total < 17 && !dealer.Hand.IsBust)
+            {
+                Card card = dealer.Deal(shoe);
+                dealer.Hit(card);
+                log += $"\nDealer hits and now has {dealer.Hand.Total}.";
+            }
+
+            if (dealer.Hand.IsBust)
+                log += $"\nDealer busts at {dealer.Hand.Total}.";
+            else
+                log += $"\nDealer stands at {dealer.Hand.Total}.";
+
+            State = GameState.Resolving;
+            return log + "\n" + Resolve();
         }
 
         private string DealerHit()

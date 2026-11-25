@@ -10,11 +10,96 @@ namespace Blackjack_course
         private Table table;
         private int shoeSize = 8;
         private int playerCount = 3;
+        private bool isSoloMode;
+        private Panel modeSelectionPanel;
 
         public Form1()
         {
             InitializeComponent();
+            nudPlayers.Minimum = 1;
+            nudPlayers.Maximum = 3;
+            nudPlayers.Value = 3;
+            nudShoeSize.Minimum = 1;
+            nudShoeSize.Maximum = 8;
+            nudShoeSize.Value = 8;
             gamePanel.Visible = false;
+            InitializeModeSelectionPanel();
+        }
+
+        private void InitializeModeSelectionPanel()
+        {
+            modeSelectionPanel = new Panel
+            {
+                Name = "modeSelectionPanel",
+                BackColor = Color.FromArgb(230, 235, 242, 248),
+                BorderStyle = BorderStyle.FixedSingle,
+                Size = new Size(420, 270),
+                Location = new Point((ClientSize.Width - 420) / 2, (ClientSize.Height - 270) / 2),
+                Visible = false
+            };
+
+            var title = new Label
+            {
+                AutoSize = true,
+                Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold),
+                Location = new Point(72, 22),
+                Text = "Choose a game mode"
+            };
+            var dealerModeButton = new Button
+            {
+                BackColor = Color.DarkTurquoise,
+                Location = new Point(40, 78),
+                Size = new Size(338, 52),
+                Text = "Dealer Training Mode"
+            };
+            dealerModeButton.Click += (sender, e) => StartGame(false);
+
+            var soloModeButton = new Button
+            {
+                BackColor = Color.PaleGreen,
+                Location = new Point(40, 140),
+                Size = new Size(338, 52),
+                Text = "Solo Blackjack"
+            };
+            soloModeButton.Click += (sender, e) => StartGame(true);
+
+            var backButton = new Button
+            {
+                Location = new Point(40, 210),
+                Size = new Size(100, 36),
+                Text = "Back"
+            };
+            backButton.Click += (sender, e) =>
+            {
+                modeSelectionPanel.Visible = false;
+                menuPanel.Visible = true;
+                gameLabel.Visible = true;
+                menuPanel.BringToFront();
+            };
+
+            modeSelectionPanel.Controls.Add(title);
+            modeSelectionPanel.Controls.Add(dealerModeButton);
+            modeSelectionPanel.Controls.Add(soloModeButton);
+            modeSelectionPanel.Controls.Add(backButton);
+            Controls.Add(modeSelectionPanel);
+            modeSelectionPanel.BringToFront();
+        }
+
+        private void StartGame(bool soloMode)
+        {
+            isSoloMode = soloMode;
+            modeSelectionPanel.Visible = false;
+            menuPanel.Visible = false;
+            gameLabel.Visible = false;
+            gamePanel.Visible = true;
+            player2panel.Visible = !isSoloMode;
+            player3panel.Visible = !isSoloMode;
+            nudPlayers.Visible = !isSoloMode;
+            label1.Visible = !isSoloMode;
+            player1label.Text = isSoloMode ? "You" : "Player 1";
+            dealerHitBtn.Text = isSoloMode ? "Hit" : "Dealer Hit";
+
+            StartNewGame();
         }
 
         // -- menu buttons --------------------------------------
@@ -23,9 +108,8 @@ namespace Blackjack_course
         {
             menuPanel.Visible = false;
             gameLabel.Visible = false;
-            gamePanel.Visible = true;
-
-            StartNewGame(); // initialise table when player enters game screen
+            modeSelectionPanel.Visible = true;
+            modeSelectionPanel.BringToFront();
         }
 
         private void quitbtn_Click(object sender, EventArgs e) => Close();
@@ -33,8 +117,15 @@ namespace Blackjack_course
 
         private void btnHowToPlay_Click(object sender, EventArgs e)
         {
+            ShowHowToPlay();
+        }
 
-            infoWindow.Dispose();
+        private void ShowHowToPlay()
+        {
+            using (var infoWindow = new HowToPlayForm())
+            {
+                infoWindow.ShowDialog(this);
+            }
         }
 
         // -- game setup -----------------------------------
@@ -87,9 +178,11 @@ namespace Blackjack_course
             if (playerCount < 1) playerCount = 1;
             if (shoeSize < 1) shoeSize = 1;
 
-            table = new Table(shoeSize, playerCount);
+            table = new Table(shoeSize, isSoloMode ? 1 : playerCount, isSoloMode);
 
-            Log($"New game — {playerCount} players, {shoeSize}-deck shoe.");
+            Log(isSoloMode
+                ? $"Solo game started with a {shoeSize}-deck shoe. Place your bet and deal."
+                : $"New game — {playerCount} players, {shoeSize}-deck shoe.");
             UpdateButtons();
             RefreshCardDisplay();
             UpdateUI();
@@ -148,9 +241,7 @@ namespace Blackjack_course
 
         private void howToPlaybtn2_Click(object sender, EventArgs e)
         {
-            HowToPlayForm infoWindow = new HowToPlayForm();
-            infoWindow.ShowDialog();
-            infoWindow.Dispose();
+            ShowHowToPlay();
         }
 
         // -- shoe/player count pickers -----------------------------------
@@ -173,13 +264,14 @@ namespace Blackjack_course
         private void UpdateButtons()
         {
             bool isDealerTurn = table.State == GameState.DealerTurn;
+            bool isSoloPlayerTurn = isSoloMode && table.State == GameState.PlayerTurns;
             bool isBetting = table.State == GameState.Betting;
             bool isDealing = table.State == GameState.Dealing;
             bool isDone = table.State == GameState.Done;
 
             dealBtn.Enabled = isBetting || isDealing;
-            dealerHitBtn.Enabled = isDealerTurn;
-            standBtn.Enabled = isDealerTurn;
+            dealerHitBtn.Enabled = isDealerTurn || isSoloPlayerTurn;
+            standBtn.Enabled = isDealerTurn || isSoloPlayerTurn;
             newRoundBtn.Enabled = isDone || isBetting;
         }
 
